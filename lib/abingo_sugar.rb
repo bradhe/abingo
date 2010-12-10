@@ -22,6 +22,11 @@ module AbingoSugar
   end
 
   def bingo!(test_name, options = {})
+		# If there is a specific alternative here lets create the test.
+		if options[:specific_alternative]
+			ab_test(test_name, Abingo.retrieve_alternatives(test_name), options[:specific_alternative])
+		end
+
     Abingo.bingo!(test_name, options)
   end
 
