@@ -88,8 +88,13 @@ class Abingo
        Abingo::Experiment.start_experiment!(test_name, self.parse_alternatives(alternatives), conversion_name)
        Abingo.cache.delete(lock_key)
      end
-   
-     choice = self.find_alternative_for_user(test_name, alternatives)
+
+     if options[:specific_alternative].nil?
+      choice = self.find_alternative_for_user(test_name, alternatives)
+     else
+      choice = options[:specific_alternative]
+     end
+     
      participating_tests = Abingo.cache.read("Abingo::participating_tests::#{Abingo.identity}") || []
      
      #Set this user to participate in this experiment, and increment participants count.
